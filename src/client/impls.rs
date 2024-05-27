@@ -310,15 +310,15 @@ impl GoogleMapsClient {
         crate::time_zone::request::Request::new(self, location, timestamp)
     } // fn
 
-    #[cfg(feature = "geolocation")]
+    #[cfg(feature = "geocoding")]
     #[must_use]
     pub fn geolocation<C, W>(
         &self,
         access_point: C,
     )  -> crate::geolocation::request::Request where C: IntoIterator<Item = W>,
     W: Into<WiFiAccessPoint>  {
-        let access_points: Vec<WiFiAccessPoint> = origins.into_iter().map(Into::into).collect();
-        crate::geolocation::request::Request::new(self, self.key, access_points)
+        let access_points: Vec<WiFiAccessPoint> = access_point.into_iter().map(Into::into).collect();
+        crate::geolocation::request::Request::new(self, self.key.clone(), access_points)
     }
     // -------------------------------------------------------------------------
     //
