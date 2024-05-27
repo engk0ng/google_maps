@@ -2,8 +2,11 @@ mod cell_tower;
 mod radio_type;
 pub mod wifi_access_point;
 mod new;
+#[cfg(feature = "enable-reqwest")]
 mod post;
 mod build;
+#[cfg(feature = "enable-reqwest")]
+mod execute;
 
 use crate::GoogleMapsClient;
 use crate::geolocation::request::wifi_access_point::WiFiAccessPoint;
