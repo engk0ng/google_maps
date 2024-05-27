@@ -29,3 +29,40 @@ pub struct WiFiAccessPoint {
     #[serde(alias = "signalToNoiseRatio")]
     pub signal_to_noise_ratio: Option<i16>,
 } // struct
+
+// -----------------------------------------------------------------------------
+
+impl std::convert::From<&Self> for WiFiAccessPoint {
+    /// Converts a borrowed `&LatLng` enum into an owned `LatLng` enum by
+    /// copying it.
+    fn from(loc: &Self) -> Self {
+        (*loc).clone()
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl std::convert::From<&WiFiAccessPoint> for String {
+    /// Converts a borrowed `&LatLng` struct to a `String` that contains a
+    /// latitude/longitude pair.
+    fn from(point: &WiFiAccessPoint) -> Self {
+        format!(
+            "{mac_address},{signal_strength},{age},{channel},{signal_to_noise_ratio}",
+            mac_address = point.mac_address,
+            signal_strength = point.signal_strength.unwrap(),
+            age = point.age.unwrap(),
+            channel = point.channel.unwrap(),
+            signal_to_noise_ratio = point.signal_to_noise_ratio.unwrap()
+        ) // format!
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl std::convert::From<WiFiAccessPoint> for String {
+    /// Converts an owned `LatLng` struct to a `String` that contains a
+    /// latitude/longitude pair.
+    fn from(poin: WiFiAccessPoint) -> Self {
+        Self::from(&poin)
+    }
+} // impl
