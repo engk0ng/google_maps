@@ -31,13 +31,15 @@ pub use crate::types::address_component::AddressComponent;
     feature = "directions",
     feature = "distance_matrix",
     feature = "geocoding",
-    feature = "places"
+    feature = "places",
+    feature = "geolocation"
 ))]
 pub use crate::types::bounds::Bounds;
 #[cfg(any(
     feature = "autocomplete",
     feature = "directions",
-    feature = "geocoding"
+    feature = "geocoding",
+    feature = "geolocation"
 ))]
 pub use crate::types::country::Country;
 #[cfg(any(feature = "geocoding", feature = "places"))]
@@ -159,6 +161,13 @@ pub use crate::time_zone::{
     request::Request as TimeZoneRequest,
     response::{status::Status as TimeZoneStatus, Response as TimeZoneResponse}, // reponse
 }; // crate::time_zone
+
+#[cfg(feature = "geolocation")]
+pub use crate::geolocation::{
+    error::Error as GeolocationError,
+    request::Request as GeolocationRequest,
+    response::{status::Status as GeolocationStatus, Response as GeolocationResponse}
+};
 
 // -----------------------------------------------------------------------------
 

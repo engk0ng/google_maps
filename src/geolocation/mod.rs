@@ -31,3 +31,13 @@
 
 pub mod request;
 pub mod response;
+pub mod error;
+
+const SERVICE_URL: &str = "https://www.googleapis.com/geolocation/v1/geolocate";
+
+pub use crate::geolocation::{
+    error::Error as GeolocationError,
+    request::Request as GeolocationRequest,
+    request::wifi_access_point::WiFiAccessPoint,
+    response::{status::Status as GeolocationStatus, Response as GeolocationResponse},
+};

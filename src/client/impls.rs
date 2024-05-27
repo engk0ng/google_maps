@@ -1,5 +1,6 @@
 use crate::client::GoogleMapsClient;
 use crate::types::LatLng;
+use crate::geolocation::WiFiAccessPoint;
 #[cfg(feature = "directions")]
 use crate::directions::request::location::Location;
 #[cfg(feature = "distance_matrix")]
@@ -309,6 +310,16 @@ impl GoogleMapsClient {
         crate::time_zone::request::Request::new(self, location, timestamp)
     } // fn
 
+    #[cfg(feature = "geolocation")]
+    #[must_use]
+    pub fn geolocation<C, W>(
+        &self,
+        access_point: C,
+    )  -> crate::geolocation::request::Request where C: IntoIterator<Item = W>,
+    W: Into<WiFiAccessPoint>  {
+        let access_points: Vec<WiFiAccessPoint> = origins.into_iter().map(Into::into).collect();
+        crate::geolocation::request::Request::new(self, self.key, access_points)
+    }
     // -------------------------------------------------------------------------
     //
     /// The Places API **Place Autocomplete** service returns place predictions.
@@ -674,6 +685,20 @@ impl GoogleMapsClient {
     #[cfg(feature = "enable-reqwest")]
     pub async fn get_request(&self, url: &str) -> Result<Response, crate::ReqError> {
         match self.reqwest_client.get(url).build() {
+            Ok(request) => self.reqwest_client.execute(request).await,
+            Err(error) => Err(crate::ReqError::from(error)),
+        }
+    }
+
+    #[cfg(feature = "enable-reqwest")]
+    pub async fn post_request(&self, url: &str, payload: &serde_json::Value) -> Result<Response, crate::ReqError> {
+        use reqwest::header::HeaderValue;
+
+        match self.reqwest_client
+            .post(url)
+            .header("Content-Type", HeaderValue::from_str(mime::APPLICATION_JSON.to_string().as_str()).unwrap())
+            .json(&payload)
+            .build() {
             Ok(request) => self.reqwest_client.execute(request).await,
             Err(error) => Err(crate::ReqError::from(error)),
         }

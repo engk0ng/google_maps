@@ -418,12 +418,14 @@ pub mod elevation;
 #[cfg(feature = "geocoding")]
 pub mod geocoding;
 pub mod places;
+pub mod geolocation;
 #[cfg(feature = "enable-reqwest-middleware")]
 pub mod reqwest_maybe_middleware;
 #[cfg(feature = "roads")]
 pub mod roads;
 #[cfg(feature = "time_zone")]
 pub mod time_zone;
+
 
 // Re-exports. Not great for organization but needed for backward compatibility.
 
@@ -438,13 +440,15 @@ pub use crate::types::address_component::AddressComponent;
     feature = "directions",
     feature = "distance_matrix",
     feature = "geocoding",
-    feature = "places"
+    feature = "places",
+    feature = "geolocation"
 ))]
 pub use crate::types::bounds::Bounds;
 #[cfg(any(
     feature = "autocomplete",
     feature = "directions",
-    feature = "geocoding"
+    feature = "geocoding",
+    feature = "geolocation"
 ))]
 pub use crate::types::country::Country;
 #[cfg(any(feature = "geocoding", feature = "places"))]
@@ -455,7 +459,8 @@ pub use crate::types::geometry::Geometry;
     feature = "distance_matrix",
     feature = "geocoding",
     feature = "places",
-    feature = "time_zone"
+    feature = "time_zone",
+    feature = "geolocation"
 ))]
 pub use crate::types::language::Language;
 #[cfg(any(
@@ -466,7 +471,8 @@ pub use crate::types::language::Language;
     feature = "geocoding",
     feature = "places",
     feature = "roads",
-    feature = "time_zone"
+    feature = "time_zone",
+    feature = "geolocation"
 ))]
 pub use crate::types::latlng::LatLng;
 #[cfg(any(feature = "geocoding", feature = "places"))]
@@ -476,7 +482,8 @@ pub use crate::types::location_type::LocationType;
     feature = "directions",
     feature = "distance_matrix",
     feature = "geocoding",
-    feature = "places"
+    feature = "places",
+    feature = "geolocation"
 ))]
 pub use crate::types::place_type::PlaceType;
 #[cfg(any(

@@ -4,10 +4,11 @@
 
 mod error_object;
 mod error;
+pub mod status;
 
 use crate::{
     geolocation::response::error_object::ErrorObject,
-    latlng::LatLng,
+    types::latlng::LatLng,
 }; // use
 use serde::{Deserialize, Serialize};
 
